@@ -1,0 +1,59 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>70d1f250-41f2-400c-ade2-b252bb93a9f0</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>GameLayer.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>PythonGameProject</Name>
+    <RootNamespace>PythonGameProject</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Sounds\" />
+    <Folder Include="Sprites\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sounds\backgroundMusic0.mp3" />
+    <Content Include="Sounds\jump.mp3" />
+    <Content Include="Sounds\punch.mp3" />
+    <Content Include="Sounds\walk.mp3" />
+    <Content Include="Sounds\wind.mp3" />
+    <Content Include="Sprites\arrow.png" />
+    <Content Include="Sprites\background0.jpg" />
+    <Content Include="Sprites\background1.jpg" />
+    <Content Include="Sprites\ground0.png" />
+    <Content Include="Sprites\spr_m_traveler_idle_anim.gif" />
+    <Content Include="Sprites\spr_m_traveler_jump_1up_anim.gif" />
+    <Content Include="Sprites\spr_m_traveler_jump_3down_anim.gif" />
+    <Content Include="Sprites\spr_m_traveler_look_anim.gif" />
+    <Content Include="Sprites\spr_m_traveler_run_anim.gif" />
+    <Content Include="Sprites\spr_skeleton_walk_anim.gif" />
+    <Content Include="Sprites\spr_toucan_fly_anim.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameLayer.py" />
+    <Compile Include="OrumMiniEngine.py" />
+    <Compile Include="UtilityLibs.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\chaor\\Desktop\\Projects\\PythonGameProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{70D1F250-41F2-400C-ADE2-B252BB93A9F0}|PythonGameProject\\PythonGameProject.pyproj|C:\\Users\\chaor\\Desktop\\Projects\\PythonGameProject\\PythonGameProject\\GameLayer.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{70D1F250-41F2-400C-ADE2-B252BB93A9F0}|PythonGameProject\\PythonGameProject.pyproj|solutionrelative:PythonGameProject\\GameLayer.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70D1F250-41F2-400C-ADE2-B252BB93A9F0}|PythonGameProject\\PythonGameProject.pyproj|C:\\Users\\chaor\\Desktop\\Projects\\PythonGameProject\\PythonGameProject\\OrumMiniEngine.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{70D1F250-41F2-400C-ADE2-B252BB93A9F0}|PythonGameProject\\PythonGameProject.pyproj|solutionrelative:PythonGameProject\\OrumMiniEngine.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameLayer.py",
+              "DocumentMoniker": "C:\\Users\\chaor\\Desktop\\Projects\\PythonGameProject\\PythonGameProject\\GameLayer.py",
+              "RelativeDocumentMoniker": "PythonGameProject\\GameLayer.py",
+              "ToolTip": "C:\\Users\\chaor\\Desktop\\Projects\\PythonGameProject\\PythonGameProject\\GameLayer.py",
+              "RelativeToolTip": "PythonGameProject\\GameLayer.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-12-14T14:42:42.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OrumMiniEngine.py",
+              "DocumentMoniker": "C:\\Users\\chaor\\Desktop\\Projects\\PythonGameProject\\PythonGameProject\\OrumMiniEngine.py",
+              "RelativeDocumentMoniker": "PythonGameProject\\OrumMiniEngine.py",
+              "ToolTip": "C:\\Users\\chaor\\Desktop\\Projects\\PythonGameProject\\PythonGameProject\\OrumMiniEngine.py",
+              "RelativeToolTip": "PythonGameProject\\OrumMiniEngine.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002457|",
+              "WhenOpened": "2025-12-14T14:42:41.837Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
