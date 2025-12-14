@@ -85,10 +85,14 @@ class OrumGame:
         self.__releasedOnceMouseRightButton = False
         self.__window.GetTK().bind("<Motion>",self.OnMouseMove)
         self.__mousePosition = Vector2D(0,0)
-    def SetCurrentScene(self, sceneName:str)->None:
-        self.__currentSceneName = sceneName
     def AddScene(self, sceneName: str ,scene: Scene)->None:
         self.__nameToScene[sceneName] = scene
+    def RemoveScene(self, sceneName: str)->None:
+        self.__nameToScene.pop(sceneName)
+    def HasThisScene(self, sceneName: str)->bool:
+        if sceneName in self.__nameToScene:
+            return True
+        return False
     def SetCurrentScene(self, sceneName: str)->None:
         self.__nameToScene[self.__currentSceneName].Unpack()
         self.__currentSceneName = sceneName

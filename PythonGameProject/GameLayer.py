@@ -1,4 +1,5 @@
 # -*- coding: cp949 -*-
+from pydoc import text
 from typing import Callable
 from OrumMiniEngine import *
 import pygame
@@ -111,7 +112,12 @@ def Kill(me: Collider, other: Collider):
 
 def PlayerCollision(me: Collider, other: Collider):
     if other.GetColliderTag() == "DamageToPlayer":
-        print("Damaged")
+        PlayerDied()
+
+def PlayerDied():
+    menuIndex = 1
+    gameEngine.SetCurrentScene("menu")
+    Reset()
 
 class Block:
     def __init__(self, position:Vector2D, size: Vector2D, source:str = "Sprites\\ground0.png"):
@@ -146,29 +152,12 @@ class ColliderBlock:
 windowSize = Vector2D(960,540)
 centerPos = Vector2D(windowSize.x/2,windowSize.y/2 + 170)
 window = Window("Platformer", windowSize)
-mainScene = Scene(window)
 menuScene = Scene(window)
-gameEngine = OrumGame(window, {"menu": menuScene,"main": mainScene}, "menu")
-background = Background(Image.open("Sprites\\background1.jpg"),Vector2D(windowSize.x/2,windowSize.y/2), Vector2D(960,540))
-playerGameObject = Player()
-blocks:list[Block] = [Block(Vector2D(350,700), Vector2D(500, 80)), 
-                      Block(Vector2D(900,600), Vector2D(500, 80)), 
-                      Block(Vector2D(1500,550), Vector2D(500, 80))]
+gameEngine = OrumGame(window, {"menu": menuScene}, "menu")
+blocks:list[Block]
 def TouchPlayer(collider0: Collider, collider1: Collider)->None:
     if collider1 == playerGameObject.collider:
-        print("Touched")
-bottomCollider = ColliderBlock(Vector2D(windowSize.x/2,1500),Vector2D(1000,500),collisionStayFunc=TouchPlayer,onlyForTrigger=True, showRect=False)
-left = True
-pygame.init()
-pygame.mixer.music.load("Sounds\\backgroundMusic0.mp3")
-pygame.mixer.music.play(-1)
-playerSoundChannel = pygame.mixer.Channel(0)
-creatureSoundChannel = pygame.mixer.Channel(1)
-jumpSound = pygame.mixer.Sound("Sounds\\jump.mp3")
-creatureDeathSound = pygame.mixer.Sound("Sounds\\punch.mp3")
-flyingCreatures = [FlyingCreature(Vector2D(1000, 400))]
-walkingCreatures = [WalkingCreature(Vector2D(900, 400))]
-
+        PlayerDied()
 def MainUpdate()->None:
     global left
     if gameEngine.GetKey(39):
@@ -214,10 +203,34 @@ def MainUpdate()->None:
         flyingCreature.transform.Move(backGroundMoveVector)
     for walkingCreature in walkingCreatures:
         walkingCreature.transform.Move(backGroundMoveVector)
+def Reset():
+    global mainScene, background, playerGameObject, blocks, bottomCollider, left, flyingCreatures, walkingCreatures
+    if gameEngine.HasThisScene("main"):
+        gameEngine.RemoveScene("main")
+    mainScene = Scene(window)
+    background = Background(Image.open("Sprites\\background1.jpg"),Vector2D(windowSize.x/2,windowSize.y/2), Vector2D(960,540))
+    playerGameObject = Player()
+    blocks = [Block(Vector2D(350,700), Vector2D(500, 80)), 
+                          Block(Vector2D(900,600), Vector2D(500, 80)), 
+                          Block(Vector2D(1500,550), Vector2D(500, 80))]
+    bottomCollider = ColliderBlock(Vector2D(windowSize.x/2,1500),Vector2D(1000,500),collisionStayFunc=TouchPlayer,onlyForTrigger=True, showRect=False)
+    left = True
+    flyingCreatures = [FlyingCreature(Vector2D(1000, 400))]
+    walkingCreatures = [WalkingCreature(Vector2D(900, 400))]
+    mainScene.SetUpdateFunc(MainUpdate)
+    gameEngine.AddScene("main", mainScene)
+Reset()
+pygame.init()
+pygame.mixer.music.load("Sounds\\backgroundMusic0.mp3")
+pygame.mixer.music.play(-1)
+playerSoundChannel = pygame.mixer.Channel(0)
+creatureSoundChannel = pygame.mixer.Channel(1)
+jumpSound = pygame.mixer.Sound("Sounds\\jump.mp3")
+creatureDeathSound = pygame.mixer.Sound("Sounds\\punch.mp3")
 
-menuScene.GetCanvas().create_text(centerPos.x,centerPos.y - 250,font="Times 20 bold",text="Platformer")
-menuScene.GetCanvas().create_text(centerPos.x,centerPos.y - 180,font="Times 15 italic bold",text="Start")
-menuScene.GetCanvas().create_text(centerPos.x,centerPos.y - 130,font="Times 15 italic bold",text="Exit")
+menuTitle = menuScene.GetCanvas().create_text(centerPos.x,centerPos.y - 250,font="Times 20 bold",text="PLATFORMER")
+firstChoice = menuScene.GetCanvas().create_text(centerPos.x,centerPos.y - 180,font="Times 15 italic bold",text="Start")
+secondChoice = menuScene.GetCanvas().create_text(centerPos.x,centerPos.y - 130,font="Times 15 italic bold",text="Exit")
 arrowGameObject = GameObject(menuScene)
 arrowTransform = Transform(arrowGameObject, Vector2D(centerPos.x-80,centerPos.y - 180))
 arrowGameObject.AddComponent(arrowTransform)
@@ -226,23 +239,51 @@ arrowGameObject.AddComponent(arrowRenderer)
 menuScene.AddGameObject(arrowGameObject)
 
 menuIndex = 0
+choiceIndex = 0
 def MenuUpdate()->None:
     global menuIndex
-    if gameEngine.GetKeyDown(32):
-        if menuIndex == 0:
-            gameEngine.SetCurrentScene("main")
-        elif menuIndex == 1:
-            window.Destroy()
-    if gameEngine.GetKeyDown(38):
-        menuIndex = (menuIndex + 1) % 2
-    if gameEngine.GetKeyDown(40):
-        menuIndex = (menuIndex - 1) % 2
+    global choiceIndex
     if menuIndex == 0:
-        arrowTransform.SetPosition(Vector2D(centerPos.x-80,centerPos.y - 180))
+        if gameEngine.GetKeyDown(32):
+            if choiceIndex == 0:
+                gameEngine.SetCurrentScene("main")
+                menuIndex = 1
+            elif choiceIndex == 1:
+                window.Destroy()
+        menuScene.GetCanvas().itemconfig(menuTitle, text="PLATFORMER")
+        menuScene.GetCanvas().itemconfig(firstChoice, text="Start")
+        menuScene.GetCanvas().itemconfig(secondChoice, text="Exit Game")
     elif menuIndex == 1:
+        if gameEngine.GetKeyDown(32):
+            if choiceIndex == 0:
+                gameEngine.SetCurrentScene("main")
+                menuIndex = 1
+            elif choiceIndex == 1:
+                gameEngine.SetCurrentScene("menu")
+                menuIndex = 0
+        menuScene.GetCanvas().itemconfig(menuTitle, text="You Died")
+        menuScene.GetCanvas().itemconfig(firstChoice, text="Restart")
+        menuScene.GetCanvas().itemconfig(secondChoice, text="Exit to Menu")
+    elif menuIndex == 2:
+        if gameEngine.GetKeyDown(32):
+            if choiceIndex == 0:
+                gameEngine.SetCurrentScene("main")
+                menuIndex = 1
+            elif choiceIndex == 1:
+                gameEngine.SetCurrentScene("menu")
+                menuIndex = 0
+        menuScene.GetCanvas().itemconfig(menuTitle, text="CLEAR!!")
+        menuScene.GetCanvas().itemconfig(firstChoice, text="Restart")
+        menuScene.GetCanvas().itemconfig(secondChoice, text="Exit to Menu")
+    if gameEngine.GetKeyDown(38):
+        choiceIndex = (choiceIndex + 1) % 2
+    if gameEngine.GetKeyDown(40):
+        choiceIndex = (choiceIndex - 1) % 2
+    if choiceIndex == 0:
+        arrowTransform.SetPosition(Vector2D(centerPos.x-80,centerPos.y - 180))
+    elif choiceIndex == 1:
         arrowTransform.SetPosition(Vector2D(centerPos.x-80,centerPos.y - 130))
 
-mainScene.SetUpdateFunc(MainUpdate)
 menuScene.SetUpdateFunc(MenuUpdate)
 
 gameEngine.GameUpdate()
