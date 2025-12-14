@@ -240,8 +240,7 @@ def Reset():
                        FlyingCreature(Vector2D(2700, 500)),
                        FlyingCreature(Vector2D(3300, 450)),
                        FlyingCreature(Vector2D(4500, 500)),
-                       FlyingCreature(Vector2D(5700, 400)),
-                       FlyingCreature(Vector2D(2100, 500), 100)]
+                       FlyingCreature(Vector2D(5700, 400))]
     walkingCreatures = [WalkingCreature(Vector2D(900, 400)), 
                         WalkingCreature(Vector2D(1500, 350), 150), WalkingCreature(Vector2D(1600, 350)), 
                         WalkingCreature(Vector2D(2100, 350)),
