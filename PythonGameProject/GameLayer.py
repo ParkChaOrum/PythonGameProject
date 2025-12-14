@@ -1,5 +1,6 @@
 # -*- coding: cp949 -*-
 from pydoc import text
+from tkinter.messagebox import showerror
 from typing import Callable
 from OrumMiniEngine import *
 import pygame
@@ -113,21 +114,30 @@ def Kill(me: Collider, other: Collider):
 def PlayerCollision(me: Collider, other: Collider):
     if other.GetColliderTag() == "DamageToPlayer":
         PlayerDied()
+    if other.GetColliderTag() == "ClearFlag":
+        PlayerClear()
 
 def PlayerDied():
+    global menuIndex
     menuIndex = 1
     gameEngine.SetCurrentScene("menu")
     Reset()
 
+def PlayerClear():
+    global menuIndex
+    menuIndex = 2
+    gameEngine.SetCurrentScene("menu")
+    Reset()
+
 class Block:
-    def __init__(self, position:Vector2D, size: Vector2D, source:str = "Sprites\\ground0.png"):
+    def __init__(self, position:Vector2D, size: Vector2D, source:str = "Sprites\\ground0.png", onlyForTrigger = False, colliderTag="None"):
         self.gameObject = GameObject(mainScene)
         self.transform = Transform(self.gameObject, position)
         self.gameObject.AddComponent(self.transform)
         img = Image.open(source)
         self.renderer = Renderer(self.transform, img.resize((size.x, size.y)))
         self.gameObject.AddComponent(self.renderer)
-        self.collider = Collider(self.transform, size.x/2, size.x/2, size.y/2, size.y/2, showRect=False)
+        self.collider = Collider(self.transform, size.x/2, size.x/2, size.y/2, size.y/2, showRect=False, onlyForTrigger=onlyForTrigger, colliderTag=colliderTag)
         self.gameObject.AddComponent(self.collider)
         mainScene.AddGameObject(self.gameObject)
 
@@ -212,11 +222,33 @@ def Reset():
     playerGameObject = Player()
     blocks = [Block(Vector2D(350,700), Vector2D(500, 80)), 
                           Block(Vector2D(900,600), Vector2D(500, 80)), 
-                          Block(Vector2D(1500,550), Vector2D(500, 80))]
+                          Block(Vector2D(1500,550), Vector2D(500, 80)),
+                          Block(Vector2D(2100,550), Vector2D(500, 80)),
+                          Block(Vector2D(2700,600), Vector2D(500, 80)),
+                          Block(Vector2D(3300,610), Vector2D(500, 80)),
+                          Block(Vector2D(3900,600), Vector2D(500, 80)), 
+                          Block(Vector2D(4500,550), Vector2D(500, 80)),
+                          Block(Vector2D(5100,550), Vector2D(500, 80)),
+                          Block(Vector2D(5700,600), Vector2D(500, 80)),
+                          Block(Vector2D(6300,610), Vector2D(500, 80)),
+                          Block(Vector2D(6500,545), Vector2D(70,70),
+                                source="Sprites\\clearFlag.png", onlyForTrigger=True,colliderTag="ClearFlag")]
     bottomCollider = ColliderBlock(Vector2D(windowSize.x/2,1500),Vector2D(1000,500),collisionStayFunc=TouchPlayer,onlyForTrigger=True, showRect=False)
     left = True
-    flyingCreatures = [FlyingCreature(Vector2D(1000, 400))]
-    walkingCreatures = [WalkingCreature(Vector2D(900, 400))]
+    flyingCreatures = [FlyingCreature(Vector2D(1000, 400)),
+                       FlyingCreature(Vector2D(1500, 500)),
+                       FlyingCreature(Vector2D(2700, 500)),
+                       FlyingCreature(Vector2D(3300, 450)),
+                       FlyingCreature(Vector2D(4500, 500)),
+                       FlyingCreature(Vector2D(5700, 400)),
+                       FlyingCreature(Vector2D(2100, 500), 100)]
+    walkingCreatures = [WalkingCreature(Vector2D(900, 400)), 
+                        WalkingCreature(Vector2D(1500, 350), 150), WalkingCreature(Vector2D(1600, 350)), 
+                        WalkingCreature(Vector2D(2100, 350)),
+                        WalkingCreature(Vector2D(2700, 400)),
+                        WalkingCreature(Vector2D(4500, 400)),
+                        WalkingCreature(Vector2D(5700, 400)),
+                        WalkingCreature(Vector2D(6300, 400))]
     mainScene.SetUpdateFunc(MainUpdate)
     gameEngine.AddScene("main", mainScene)
 Reset()
