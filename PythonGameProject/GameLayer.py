@@ -30,7 +30,7 @@ class Player:
         self.animController.AddAnim('rightJump', rightJumpAnim)
         self.animController.AddAnim('leftFall', leftFallAnim)
         self.animController.AddAnim('rightFall', rightFallAnim)
-        self.collider = Collider(self.transform, 15, 15, 19, 32, showRect=True, collisionStayFunc=PlayerCollision)
+        self.collider = Collider(self.transform, 15, 15, 19, 32, showRect=False, collisionStayFunc=PlayerCollision)
         self.gameObject.AddComponent(self.collider)
         self.physics = Physics(self.collider, 1, 20, horizontalFriction=1 ,jumpCount=2)
         self.gameObject.AddComponent(self.physics)
